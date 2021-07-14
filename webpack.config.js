@@ -80,32 +80,48 @@ const config = {
                 include: path.resolve(__dirname, "src/html/includes"),
                 use: ["raw-loader"],
             },
+            {
+                test: /\.svg$/,
+                use: [
+                    "babel-loader",
+                    {
+                        loader: "react-svg-loader",
+                        options: {
+                            svgo: {
+                                plugins: [{ removeTitle: false }],
+                                floatPrecision: 2
+                            },
+                            jsx: true
+                        }
+                    }
+                ]
+            }
         ],
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: "./css/style.bundle.css",
         }),
-      /*  new CopyPlugin({
+        new CopyPlugin({
             patterns: [
-                {
+           /*     {
                     from: "./src/fonts",
                     to: "./fonts",
                 },
                 {
                     from: "./src/favicon",
                     to: "./favicon",
-                },
+                },*/
                 {
-                    from: "./src/img",
+                    from: "./src/image",
                     to: "./img",
                 },
-                {
+              /*  {
                     from: "./src/uploads",
                     to: "./uploads",
-                },
+                },*/
             ],
-        }),*/
+        }),
     ].concat(htmlPlugins),
 };
 
