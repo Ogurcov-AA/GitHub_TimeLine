@@ -8,8 +8,8 @@ export default async function getHtml() {
                     </div>
                         <nav class="left-menu">
                             <ul>
-                            <li>${await navButton("img/repository.svg", "Repository")}</li>
-                            <li>${await navButton("img/activity.svg", "Activity")}</li>
+                            <li>${navButton("img/repository.svg", "Repository")}</li>
+                            <li>${navButton("img/activity.svg", "Activity")}</li>
                             </ul>                        
                         </nav>
                 </div>`;
