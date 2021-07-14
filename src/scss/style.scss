@@ -1,7 +1,8 @@
+@import "navButton";
+
 $fontStyle: Roboto, sans-serif;;
 $fontColorMain: #2B3648;
 $textColor: #ffff;
-
 body {
   background: $fontColorMain;
   font-family: $fontStyle;
@@ -50,5 +51,41 @@ body {
     background: #C4C4C4 100%;
     border-radius: 20px;
     outline: none;
+  }
+}
+.left-side{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18%;
+  height: 100%;
+  background: #212936;
+
+}
+.user-info{
+  border-bottom: 1px solid #313C4E ;
+  h4{
+    font-family: $fontStyle;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.15px;
+    color: #AFBDD1;
+    margin-left: 5%;
+    margin-bottom: 2%;
+  }
+}
+.user-image{
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 10% 0 0 5%;
+}
+.left-menu{
+  ul{
+    padding-left: 0;
+  }
+  li{
+    list-style-type: none;
   }
 }

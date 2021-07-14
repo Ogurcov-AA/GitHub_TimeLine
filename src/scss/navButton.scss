@@ -1,0 +1,24 @@
+.rectangle-button{
+  width: 90%;
+  margin: 0 5%;
+  color: #56657F;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.1px;
+  display: flex;
+  border-radius: 4px;
+
+  img{
+    margin: 0 15% 0 3%;
+  }
+}
+.rectangle-button:hover{
+  background: #2B3648;
+}
+.rectangle-button:active{
+  color: #1976D2;
+  img{
+    filter: invert(1);
+  }
+}
