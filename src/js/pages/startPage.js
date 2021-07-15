@@ -8,3 +8,12 @@ export default async function getHtml() {
                 </div>`;
     return html
 }
+
+addEventListener('keydown',()=> {
+    let elem = document.getElementsByTagName('input')[0]
+    elem.oninput = function (){
+        window.store.userObject.actions.getUserInfo(elem.value).then(res=>{}).catch(rej=>{})
+    }
+})
+
+
