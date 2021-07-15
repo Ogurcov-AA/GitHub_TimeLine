@@ -48,6 +48,9 @@ const userObject = {
     getters: {
         getName: () => {
             return window.store.userObject.state.userName
+        },
+        getAvatar: () => {
+            return window.store.userObject.state.userAvatarUrl
         }
     }
 }
