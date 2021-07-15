@@ -30,10 +30,14 @@ function addComponentFoundUser(elem) {
         `<div class="search-user">
                             ${userFoundComponent(store.userObject.getters.getAvatar(), store.userObject.getters.getName())}
                         </div>`)
+
+    document.getElementsByClassName('user-search-rectangle')[0].onclick = function () {
+        location.pathname = `/${store.userObject.getters.getName()}`
+    }
 }
 
 function removeComponentFoundUser(elem) {
-    if (document.getElementsByClassName('search-user').length > 0 || elem.value==="")
+    if (document.getElementsByClassName('search-user').length > 0 || elem.value === "")
         document.getElementsByClassName('search-user')[0].remove()
 }
 
