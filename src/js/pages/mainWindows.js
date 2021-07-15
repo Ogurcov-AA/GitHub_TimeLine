@@ -1,5 +1,5 @@
-import leftMenu from "../component/leftMenu";
 import navButton from "../component/navButton";
+
 export default async function getHtml() {
     let html = `<div class="left-side">
                     <div class="user-info">
