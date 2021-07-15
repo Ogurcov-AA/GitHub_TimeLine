@@ -14,7 +14,7 @@ export default async function getHtml() {
 addEventListener('keydown', () => {
     let elem = document.getElementsByTagName('input')[0]
     elem.oninput = function () {
-        window.store.userObject.actions.getUserInfo(elem.value)
+        store.userObject.actions.getUserInfo(elem.value)
             .then(res => {
                 removeComponentFoundUser(elem)
                 addComponentFoundUser(elem)
@@ -28,7 +28,7 @@ addEventListener('keydown', () => {
 function addComponentFoundUser(elem) {
     document.getElementsByClassName('startPage')[0].insertAdjacentHTML("beforeend",
         `<div class="search-user">
-                            ${userFoundComponent(window.store.userObject.getters.getAvatar(), window.store.userObject.getters.getName())}
+                            ${userFoundComponent(store.userObject.getters.getAvatar(), store.userObject.getters.getName())}
                         </div>`)
 }
 
