@@ -1,5 +1,6 @@
 @import "navButton";
 @import "userSearch";
+@import "charts";
 
 $fontStyle: Roboto, sans-serif;;
 $fontColorMain: #2B3648;
@@ -7,6 +8,7 @@ $textColor: #ffff;
 body {
   background: $fontColorMain;
   font-family: $fontStyle;
+  max-height: 100%;
 }
 
 .startPage {
@@ -60,4 +62,10 @@ body {
   li{
     list-style-type: none;
   }
+}
+
+.main-field{
+  width: 82%;
+  height: 70%;
+  float: right;
 }

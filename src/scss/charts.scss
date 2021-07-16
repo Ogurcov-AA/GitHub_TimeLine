@@ -1,0 +1,14 @@
+.charts {
+  display: flex;
+  justify-content: center;
+  margin: 3% 20%;
+  max-width: 60%;
+  height: 60%;
+  border-color: black;
+
+
+  canvas {
+    height: 20rem;
+  }
+}
+

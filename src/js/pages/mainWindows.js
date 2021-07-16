@@ -1,4 +1,5 @@
 import navButton from "../component/navButton";
+import {charts,chartSettings} from "../component/charts";
 
 export default async function getHtml() {
     let html = `<div class="left-side">
@@ -12,6 +13,16 @@ export default async function getHtml() {
                             <li>${navButton("img/activity.svg", "Activity")}</li>
                             </ul>                        
                         </nav>
+                </div>
+                <div class="main-field">
+               ${charts()}
+               </div>
                 </div>`;
     return html;
 }
+
+window.onload = function (){
+store.repository.actions.getRepositoryInfo(store.userObject.getters.getName(),10,1)
+    chartSettings();
+}
+
