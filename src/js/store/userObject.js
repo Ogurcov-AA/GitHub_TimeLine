@@ -1,4 +1,4 @@
-import axios from "axios";
+import requestServices from '../../services/requestService.js'
 
 const userObject = {
     state: {
@@ -6,51 +6,60 @@ const userObject = {
         userAvatarUrl: (JSON.parse(sessionStorage.getItem('userObject')))?.userAvatarUrl || null,
         userPublicRepos: (JSON.parse(sessionStorage.getItem('userObject')))?.userPublicRepos || null,
         userCreated: (JSON.parse(sessionStorage.getItem('userObject')))?.userCreated || null,
+        errorLoading: false,
+        isLoading: false
     },
     mutations: {
         setInfo(state, data) {
             console.log(data)
-
-            state.userName = data.userName
-            state.userAvatarUrl = data.userAvatarUrl
-            state.userPublicRepos = data.userPublicRepos
-            state.userCreated = data.userCreated
+            state.userName = data.login
+            state.userAvatarUrl = data.avatar_url
+            state.userPublicRepos = data.public_repos
+            state.userCreated = data.created_at.slice(0, 10)
+            this.saveDataInStorage(state)
+        },
+        error(state) {
+            state.errorLoading = true
+        },
+        setLoading(state, boolean) {
+            state.isLoading = boolean
+        },
+        saveDataInStorage(state) {
+            if (sessionStorage.getItem('userObject'))
+                sessionStorage.removeItem('userObject')
+            sessionStorage.setItem('userObject', JSON.stringify({
+                userName: state.userName,
+                userAvatarUrl: state.userAvatarUrl,
+                userPublicRepos: state.userPublicRepos,
+                userCreated: state.userCreated
+            }))
         }
     },
     actions: {
-        getUserInfo(userName) {
-            return new Promise((resolve, reject) => {
-                axios.get(`https://api.github.com/users/${userName}`)
-                    .then(response => {
-                        window.store.userObject.mutations.setInfo(window.store.userObject.state,
-                            {
-                                userName: response.data.login,
-                                userAvatarUrl: response.data.avatar_url,
-                                userPublicRepos: response.data.public_repos,
-                                userCreated: response.data.created_at.slice(0, 10)
-                            })
-                        if (sessionStorage.getItem('userObject'))
-                            sessionStorage.removeItem('userObject')
-                        sessionStorage.setItem('userObject', JSON.stringify({
-                            userName: response.data.login,
-                            userAvatarUrl: response.data.avatar_url,
-                            userPublicRepos: response.data.public_repos,
-                            userCreated: response.data.created_at.slice(0, 10)
-                        }))
-                        resolve()
-                    })
-                    .catch(rej => {
-                        reject('not found')
-                    })
-            })
+        async getUserInfo(userName) {
+            try {
+                store.userObject.mutations.setLoading(store.userObject.state, true)
+                const response = await requestServices.getUser(userName)
+                store.userObject.mutations.setInfo(store.userObject.state, response.data)
+            } catch (e) {
+                store.userObject.mutations.error(window.store.userObject.state)
+            } finally {
+                store.userObject.mutations.setLoading(store.userObject.state, false)
+            }
         }
     },
     getters: {
         getName: () => {
-            return window.store.userObject.state.userName
+            return store.userObject.state.userName
         },
         getAvatar: () => {
-            return window.store.userObject.state.userAvatarUrl
+            return store.userObject.state.userAvatarUrl
+        },
+        checkError: () => {
+            return store.userObject.state.errorLoading
+        },
+        getLoading: ()=>{
+            return store.userObject.state.isLoading
         }
     }
 }
