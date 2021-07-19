@@ -23,6 +23,17 @@ export default async function getHtml() {
 
 window.onload = function (){
 store.repository.actions.getRepositoryInfo(store.userObject.getters.getName(),10,1)
-    chartSettings();
+    let timer = setInterval(()=>{
+        if(store.repository.getters.getLoading()!==true && store.repository.getters.checkLoadingRepos()!==true){
+            chartSettings();
+            clearInterval(timer)
+    }else{
+
+        }
+    },100)
+
+}
+function checkLoadingData(){
+
 }
 
