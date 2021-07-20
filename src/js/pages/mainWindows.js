@@ -16,6 +16,7 @@ export default async function getHtml() {
                 </div>
                 <div class="main-field">
                ${charts()}
+               <div class="loading">loading</div>
                </div>
                 </div>`;
     return html;
@@ -27,6 +28,7 @@ store.repository.actions.getRepositoryInfo(store.userObject.getters.getName(),10
         if(store.repository.getters.getLoading()!==true && store.repository.getters.checkLoadingRepos()!==true){
             chartSettings();
             clearInterval(timer)
+            document.getElementsByClassName('loading')[0].remove()
     }else{
 
         }
