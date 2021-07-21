@@ -32,7 +32,7 @@ function addComponentFoundUser(elem) {
                         </div>`)
 
     document.getElementsByClassName('user-search-rectangle')[0].onclick = function () {
-        location.pathname = `/${store.userObject.getters.getName()}`
+        location.pathname = `users/${store.userObject.getters.getName()}/activity`
     }
 }
 

@@ -1,5 +1,6 @@
 import startpage from '/src/js/pages/startPage.js'
-import mainWindow from '/src/js/pages/mainWindows.js'
+import mainWindow from '/src/js/pages/repos.js'
+import activity from '/src/js/pages/activity'
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
 const navigateTo = url => {
@@ -11,7 +12,8 @@ const navigateTo = url => {
 const router = async () => {
     const routes = [
         { path: "/", view: startpage },
-        { path: "/:user", view: mainWindow },
+        { path: "/users/:user/repos", view: mainWindow},
+        { path: "/users/:user/activity", view: activity},
     ]
     const potentialMatches = routes.map(route => {
         return {
@@ -19,7 +21,6 @@ const router = async () => {
             result: location.pathname.match(pathToRegex(route.path))
         };
     });
-
     let match = potentialMatches.find(potentialMatch => potentialMatch.result !== null);
     if (!match) {
         match = {
