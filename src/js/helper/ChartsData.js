@@ -16,7 +16,8 @@ export default class ChartsData{
 
     reposCount = 0;
     currentYear = 2021;
-    startData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    startData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    reposList
 
     dataInitialization = () => {
         const data = {
@@ -31,10 +32,16 @@ export default class ChartsData{
         };
         return data
     }
+    getMinYear = ()=>{
+       let min =  this.reposList.reduce((acc,item)=>{
+           let year = this.parseDate(item.created)[0]
+           return year>acc?acc:year
+        },this.parseDate(this.reposList[0].created)[0])
+    }
 
      sortDataForCharts = () => {
-        let reposList = store.repository.getters.getRepos()
-        reposList.forEach(item => {
+        this.reposList = store.repository.getters.getRepos();
+        this.reposList.forEach(item => {
             let dateArr = this.parseDate(item.created)
             if (this.checkYear(dateArr)) {
                 this.reposCount++

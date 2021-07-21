@@ -10,12 +10,10 @@ import ChartsData from "../helper/ChartsData.js";
 
     let chart
     const dataObj = new ChartsData()
-
     function chartSettings() {
         dataObj.sortDataForCharts()
         chartInitialization(dataObj.dataInitialization())
         setTittleInfo(dataObj.currentYear,dataObj.reposCount)
-
     }
 
     function setTittleInfo(currentYear,reposCount) {
