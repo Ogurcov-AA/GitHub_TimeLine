@@ -1,7 +1,7 @@
 export default function reposCard(reposName,reposDescription,reposLanguage, reposURL, size){
     let html = `<div class="cardRectangle ${size}">
                     <div class="nameSize">
-                    <h2><a href="${reposURL}" class="reposName">${reposName}</a></h2>
+                    <h2 class="reposName">${reposName}<a href="${reposURL}" class="reposName">🔗</a></h2>
                     </div>
                     <h4 class="reposDescription">${reposDescription}</h4>
                             <div class="reposLanguage">

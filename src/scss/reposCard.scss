@@ -24,6 +24,10 @@ $other: red;
   overflow: hidden;
   word-wrap: break-word;
 
+  a{
+    text-decoration: none;
+  }
+
   .reposName {
     @include text();
     @include textShadow();
@@ -31,8 +35,7 @@ $other: red;
     color: $nameColor;
     font-size: 2rem;
   }
-
-  .reposName:hover {
+  a:hover{
     text-decoration: underline;
   }
 
