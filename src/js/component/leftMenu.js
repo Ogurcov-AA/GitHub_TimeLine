@@ -14,6 +14,9 @@ export default function html(activity,repos){
                             <li><a href="/users/${store.userObject.getters.getName()}/activity">
                             ${navButton("/img/activity.svg", "Activity",checkActiveButton('activity'))}
                             </a></li>
+                             <li><a href="/">
+                            ${navButton("/img/activity.svg", "Exit")}
+                            </a></li>
                             </ul>                        
                         </nav>
                 </div>`
