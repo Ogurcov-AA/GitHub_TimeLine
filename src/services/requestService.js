@@ -5,7 +5,7 @@ export default class RequestService {
     static getUser(userName) {
         return axios.get(http.getUser(userName))
     }
-    static getRepos(){
-        return axios.get(http.getRepos(store.userObject.getters.getName()))
+    static getRepos(per_page,page){
+        return axios.get(http.getRepos(store.userObject.getters.getName(),per_page,page))
     }
 }

@@ -19,10 +19,10 @@ const repository = {
         },
     },
     actions: {
-        async getRepositoryInfo() {
+        async getRepositoryInfo(per_page=null, page=null) {
             try {
                 store.repository.mutations.setLoading(store.repository.state, true)
-                const response = await requestServices.getRepos()
+                const response = await requestServices.getRepos(per_page,page)
                 store.repository.mutations.setRepos(store.repository.state,response.data)
             } catch (e) {
                 store.repository.mutations.errorRepos(store.userObject.state)
