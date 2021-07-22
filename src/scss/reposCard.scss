@@ -33,17 +33,21 @@ $other: red;
     @include textShadow();
     text-decoration: none;
     color: $nameColor;
-    font-size: 2rem;
+    margin: 0;
   }
   a:hover{
     text-decoration: underline;
   }
 
   .reposDescription {
-    @include text();
-    color: $textColor;
-    font-size: 0.8rem;
-    font-weight: 100;
+    min-height: 35%;
+
+    h4 {
+      @include text();
+      color: $textColor;
+      font-size: 0.8rem;
+      font-weight: 100;
+    }
   }
 
   .reposLanguage {
@@ -57,6 +61,7 @@ $other: red;
     @include text();
     color: $textColor;
     font-size: 1rem;
+    margin: 0;
   }
 
   .circle {
@@ -89,7 +94,7 @@ $other: red;
 }
 
 .nameSize{
-  min-height: 28%;
+  min-height: 35%;
   word-break: break-all;
 }
 .navigation {
@@ -131,14 +136,17 @@ color: $textColor;
 
 .size6 {
   min-width: 40%;
+  height: 12rem;
   max-height: 20%;
 }
 .size15{
   width: 16%;
+  height: 12rem;
   max-height: 20%;
 }
 .size30{
   width: 10%;
+  height: 12rem;
   max-height: 4%;
 }
 

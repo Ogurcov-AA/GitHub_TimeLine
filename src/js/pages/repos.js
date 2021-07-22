@@ -56,7 +56,7 @@ let elem = document.getElementById('reposCard')
     let res = await getReposList(size,page)
      for(let i =0;i<res.length;i++){
         elem?.insertAdjacentHTML('afterbegin',
-            `${reposCard(res[i].name, res[i].id, res[i].language, res[i].htmlUrl, 'size' + size)}`)
+            `${reposCard(res[i].name,'', res[i].language, res[i].htmlUrl, 'size' + size)}`)
     }
 }
 
