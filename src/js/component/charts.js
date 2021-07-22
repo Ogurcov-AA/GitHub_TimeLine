@@ -3,8 +3,7 @@ import ChartsData from "../helper/ChartsData.js";
     function charts() {
         let html = `<div class="charts">
               <canvas id="myChart"></canvas>
-            </div>
-                <button id="test">2020</button>`
+            </div>`
         return html
     }
 

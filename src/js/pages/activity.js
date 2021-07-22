@@ -5,7 +5,8 @@ import store from '../store/index'
 export default async function getHtml() {
     let html = `${leftMenu()}
                     <div class="main-field">
-                ${charts()}
+                        <div class="loader" style="margin: auto"></div>
+                            ${charts()}
                     </div>`;
     settings()
     return html;
@@ -17,7 +18,7 @@ function settings(){
         if (store.repository.getters.getLoading() !== true && store.repository.getters.checkLoadingRepos() !== true) {
             chartSettings();
             clearInterval(timer)
-            document.getElementsByClassName('loading')[0].remove()
+            document.getElementsByClassName('loader')[0].remove()
         } else {
 
         }
