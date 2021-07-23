@@ -3,7 +3,7 @@ import {charts, chartSettings} from "../component/charts";
 import store from '../store/index'
 
 export default async function getHtml() {
-    let html = `${leftMenu()}
+    let html = `${leftMenu(parseURLGetName())}
                     <div class="main-field">
                         <div class="loader" style="margin: auto"></div>
                             ${charts()}
@@ -24,3 +24,8 @@ function settings(){
         }
     }, 100)
 }
+
+function parseURLGetName(){
+    return location.pathname.substring(location.pathname.indexOf('/',1)+1,location.pathname.lastIndexOf('/'))
+}
+
