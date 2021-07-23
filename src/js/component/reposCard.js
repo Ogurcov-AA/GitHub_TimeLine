@@ -7,7 +7,7 @@ export default function reposCard(reposName,reposDescription,reposLanguage, repo
                     <h4 class="reposDescription">${reposDescription}</h4>
                          </div>
                             <div class="reposLanguage">
-                            <div class="circle other ${reposLanguage.toLowerCase()}"></div>
+                            <div class="circle other ${reposLanguage?.toLowerCase()}"></div>
                             <h4 class="reposLanguageText">${reposLanguage}</h4>
                             </div>
                 </div>`;
