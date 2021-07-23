@@ -1,0 +1,48 @@
+
+
+.coup{
+  transform: scale(-1,1);
+}
+
+.input-number {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  color: #424348;
+  font-size: 14px;
+  text-align: center;
+  width: calc(33px * 3);
+  margin: auto;
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+.input-number__input {
+  background: #E5E8EE;
+  width: 32px;
+  height: 32px;
+  border: none;
+  padding: 8px;
+  text-align: center;
+  border-radius: 10px;
+}
+  .input-number__minus,
+  .input-number__plus{
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+    font-size: 40px;
+    color: white;
+}
+
+.input-number__minus:hover,
+.input-number__plus:hover{
+  color: #1976D2;
+}

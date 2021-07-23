@@ -45,7 +45,6 @@ export default class ChartsData{
             let dateArr = this.parseDate(item.created)
             if (this.checkYear(dateArr)) {
                 this.reposCount++
-                console.log(item)
                 this.startData[Number(dateArr[1]) - 1]++
             }
         })
