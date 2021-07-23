@@ -4,7 +4,7 @@ import store from "../store";
 
 export default async function getHtml() {
     settings()
-    let html = `${leftMenu()}
+    let html = `${leftMenu(parseURLGetName())}
                      <div class="main-field">
                      <h4 class="textLabel">Public Repositories</h4>
                      <div id="reposCard" class="reposGrid">
@@ -57,13 +57,22 @@ let elem = document.getElementById('reposCard')
      for(let i =0;i<res.length;i++){
         elem?.insertAdjacentHTML('afterbegin',
             `${reposCard(res[i].name,'', res[i].language, res[i].htmlUrl, 'size' + size)}`)
+         elem.onclick = () => {
+            location.pathname = `/repos/${store.userObject.getters.getName()}/${res[i].name}`
+         }
+
     }
 }
 
 async function getReposList(per_page,page) {
-let res = await getRepos(per_page,page)
+
+    let res = await getRepos(parseURLGetName(),per_page,page)
     reposList = res
     return res
+}
+
+function parseURLGetName(){
+   return location.pathname.substring(location.pathname.indexOf('/',1)+1,location.pathname.lastIndexOf('/'))
 }
 
 async function getReposCount() {
