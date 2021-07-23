@@ -1,6 +1,9 @@
 import startpage from '/src/js/pages/startPage.js'
 import mainWindow from '/src/js/pages/repos.js'
-import activity from '/src/js/pages/activity'
+import activity from '/src/js/pages/activity.js'
+import aboutRepos from '/src/js/pages/aboutRepository.js'
+import loader from "../component/loader";
+
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
 const navigateTo = url => {
@@ -14,7 +17,9 @@ const router = async () => {
         { path: "/", view: startpage },
         { path: "/users/:user/repos", view: mainWindow},
         { path: "/users/:user/activity", view: activity},
+        { path: "/repos/:user/:repos", view: aboutRepos},
     ]
+
     const potentialMatches = routes.map(route => {
         return {
             route: route,
@@ -28,6 +33,7 @@ const router = async () => {
             result: [location.pathname]
         };
     }
+    document.querySelector("#app").innerHTML = loader();
     document.querySelector("#app").innerHTML = await match.route.view();
 };
 

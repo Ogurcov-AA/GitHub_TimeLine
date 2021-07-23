@@ -1,0 +1,89 @@
+$aboutColor: #717177;
+$font: Courier New, monospace;
+@mixin textFont(){
+ font-family: $font;
+  padding: 0 1%;
+}
+
+.about-repos{
+  color: $aboutColor;
+  margin: 3% 5% 0 5%;
+  h1{
+    margin:0;
+  }
+
+  .back-button{
+    display: inline-block;
+    color:  white;
+    font-size: 60px;
+    margin: -5% 0 0 -5%;
+  }
+  .back-button:hover{
+    color: #ff7c7c;
+  }
+
+
+  a{
+      text-decoration: none;
+      color: $aboutColor;
+    }
+  a:hover{
+    text-decoration: underline;
+    color: #1976D2;
+  }
+}
+.about-repos-description{
+  display: flex;
+  width: 100%;
+  min-height: 5rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 3%;
+  margin-bottom: 3%;
+
+  h3{
+    @include textFont();
+  }
+}
+.repos-info{
+ display: flex;
+  justify-content: space-around;
+}
+.repos-mainInfo{
+  width: 60%;
+  height: 100%;
+}
+.repos-lang{
+  width: 30%;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 10px;
+
+  p{
+    @include textFont();
+    font-size: 20px;
+  }
+
+  .secLang{
+    padding: 4%;
+  }
+
+  li{
+    display: flex;
+    padding: 5%;
+    list-style-type: none;
+    div{
+      margin-right: 5%  ;
+    }
+  }
+}
+
+.service-info{
+  border: 1px solid black;
+  border-radius: 10px;
+}
+.service-info{
+  p{
+    @include textFont();
+  }
+}
