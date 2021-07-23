@@ -40,7 +40,7 @@ $other: red;
   }
 
   .reposDescription {
-    min-height: 35%;
+    min-height: 25%;
 
     h4 {
       @include text();
@@ -63,31 +63,30 @@ $other: red;
     font-size: 1rem;
     margin: 0;
   }
-
-  .circle {
-    width: 1.1rem;
-    height: 1.1rem;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border-radius: 50px;
-  }
-  .other {
-    background: $other;
-  }
-
-  .vue {
-    background: $vue;
-  }
-
-  .java {
-    background: $java
-  }
-
-  .html {
-    background: $html;
-  }
-
 }
+.circle {
+  width: 1.1rem;
+  height: 1.1rem;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+.other {
+  background: $other;
+}
+
+.vue {
+  background: $vue;
+}
+
+.java {
+  background: $java
+}
+
+.html {
+  background: $html;
+}
+
 
 .cardRectangle:hover{
   background:  #5b5b5b;
@@ -146,7 +145,7 @@ color: $textColor;
 }
 .size30{
   width: 10%;
-  height: 12rem;
+  height: 9rem;
   max-height: 4%;
 }
 
