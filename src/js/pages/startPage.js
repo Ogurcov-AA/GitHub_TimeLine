@@ -5,7 +5,10 @@ export default async function getHtml() {
                         <h1>GitHub TimeLine</h1>
                         <div class="search-field">
                                 <h2>Enter UserName</h2>
-                                <input type="text" placeholder="Username"/>
+                               <div class="input">
+                                <div><input type="text" placeholder="Username"/></div>
+                                <div class="loader"></div>
+                                </div>
                         </div>
                 </div>`;
     return html
@@ -14,6 +17,7 @@ export default async function getHtml() {
 addEventListener('keydown', () => {
     let elem = document.getElementsByTagName('input')[0]
     elem.oninput = function () {
+        document.getElementsByClassName('input')[0].getElementsByClassName('loader')[0].style.visibility = 'visible'
         store.userObject.actions.getUserInfo(elem.value)
             .then(res => {
                 removeComponentFoundUser(elem)
