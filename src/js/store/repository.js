@@ -78,7 +78,7 @@ const repository = {
         },
         getReposLang: () => {
             return store.repository.state.reposLang
-        }
+        },
     }
 }
 
