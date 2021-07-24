@@ -11,7 +11,6 @@ const userObject = {
     },
     mutations: {
         setInfo(state, data) {
-            console.log(data)
             state.userName = data.login
             state.userAvatarUrl = data.avatar_url
             state.userPublicRepos = data.public_repos
@@ -60,6 +59,9 @@ const userObject = {
         },
         getLoading: ()=>{
             return store.userObject.state.isLoading
+        },
+        getReposCount: ()=>{
+            return store.userObject.state.userPublicRepos
         }
     }
 }
