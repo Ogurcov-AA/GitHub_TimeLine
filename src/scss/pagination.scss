@@ -1,0 +1,31 @@
+@mixin border($color){
+  border-radius: 10px;
+  background: $color;
+}
+
+.pagination-field {
+  display: inline-block;
+  @include border(white);
+
+  input[type="radio"]{
+    display: none;
+  }
+
+  label {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  label:hover{
+    @include border(#AFBDD1);
+  }
+
+  input:checked + label {
+    @include border(#4CAF50);
+    transition: background-color .10s;
+    color: white;
+  }
+}
+
+
