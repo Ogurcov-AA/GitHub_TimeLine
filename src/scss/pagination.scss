@@ -22,7 +22,7 @@
   }
 
   input:checked + label {
-    @include border(#4CAF50);
+    @include border(#1976d2);
     transition: background-color .10s;
     color: white;
   }
