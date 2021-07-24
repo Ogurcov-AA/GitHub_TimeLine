@@ -24,7 +24,7 @@ $other: red;
   overflow: hidden;
   word-wrap: break-word;
 
-  a{
+  a {
     text-decoration: none;
   }
 
@@ -35,7 +35,8 @@ $other: red;
     color: $nameColor;
     margin: 0;
   }
-  a:hover{
+
+  a:hover {
     text-decoration: underline;
   }
 
@@ -64,6 +65,7 @@ $other: red;
     margin: 0;
   }
 }
+
 .circle {
   width: 1.1rem;
   height: 1.1rem;
@@ -71,6 +73,7 @@ $other: red;
   -webkit-border-radius: 50px;
   border-radius: 50px;
 }
+
 .other {
   background: $other;
 }
@@ -88,29 +91,38 @@ $other: red;
 }
 
 
-.cardRectangle:hover{
-  background:  #5b5b5b;
+.cardRectangle:hover {
+  background: #5b5b5b;
 }
 
-.nameSize{
+.nameSize {
   min-height: 35%;
   word-break: break-all;
 }
+
 .navigation {
-  display: flex;
-  justify-content: space-around;
+  position: fixed;
+  top: 95%;
+  width: 80%;
+
+  .navigation-wrapper {
+      display: flex;
+    justify-content: space-around;
+  }
 
 }
+
 
 .pagination {
 
 }
 
-.per_page{
-color: $textColor;
+.per_page {
+  color: $textColor;
   display: flex;
+  align-items: center;
 
-  select{
+  select {
     font-family: sans-serif;
     font-weight: 700;
     color: #444;
@@ -119,13 +131,21 @@ color: $textColor;
     box-sizing: border-box;
     margin: 0;
     border: 1px solid #aaa;
-    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
     border-radius: .5em;
     background-color: #fff;
   }
-  .select-css::-ms-expand { display: none; }
-  .select-css:hover { border-color: #888; }
-  .select-css:focus { border-color: #aaa;
+
+  .select-css::-ms-expand {
+    display: none;
+  }
+
+  .select-css:hover {
+    border-color: #888;
+  }
+
+  .select-css:focus {
+    border-color: #aaa;
     box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
     color: #222;
     outline: none;
@@ -138,12 +158,14 @@ color: $textColor;
   height: 12rem;
   max-height: 20%;
 }
-.size15{
+
+.size15 {
   width: 16%;
   height: 12rem;
   max-height: 20%;
 }
-.size30{
+
+.size30 {
   width: 10%;
   height: 9rem;
   max-height: 4%;
