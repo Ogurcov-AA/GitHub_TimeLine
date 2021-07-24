@@ -1,5 +1,3 @@
-
-
 .coup{
   transform: scale(-1,1);
 }
@@ -13,6 +11,7 @@
   text-align: center;
   width: calc(33px * 3);
   margin: auto;
+  visibility: hidden;
 
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button {
@@ -45,4 +44,40 @@
 .input-number__minus:hover,
 .input-number__plus:hover{
   color: #1976D2;
+}
+
+.activity-field{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.charts-wrapper{
+width: 100%;
+}
+
+.reposList{
+  width: 30%;
+
+  ul{
+    border: 3px solid #484848;
+    border-radius: 15px;
+    padding: 0 5%;
+    margin-right: 10%;
+    visibility: hidden;
+  }
+
+  li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a{
+    text-decoration: none;
+    color: #1976d2;
+  }
+  a:hover{
+    text-decoration: underline;
+  }
 }
