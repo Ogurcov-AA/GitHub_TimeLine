@@ -17,7 +17,7 @@ export default function leftMenu(userName){
                             ${navButton("/img/activity.svg", "Activity",checkActiveButton('activity'))}
                             </a></li>
                              <li><a href="/">
-                            ${navButton("/img/activity.svg", "Exit")}
+                            ${navButton("/img/logout.svg", "Exit")}
                             </a></li>
                             </ul>                        
                         </nav>
