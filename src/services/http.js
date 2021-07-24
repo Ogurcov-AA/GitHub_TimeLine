@@ -11,4 +11,8 @@ export default class {
     static getLangRepos(userName,reposName){
         return `https://api.github.com/repos/${userName}/${reposName}/languages`
     }
+    static getReposByYear(userName,date){
+        return `https://api.github.com/search/repositories?q=user:${userName}+created:${date}`
+    }
+
 }

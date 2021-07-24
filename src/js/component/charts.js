@@ -1,14 +1,22 @@
 import ChartsData from "../helper/ChartsData.js";
 
 function charts() {
-    let html = `<div class="charts">
-              <canvas id="myChart"></canvas>
-            </div>
-                            <div class="input-number">
-                                <div class="input-number__minus coup">&#10162</div>
-                                    <input class="input-number__input" type="number" readonly min="1995" max="${new Date().getFullYear()}" value="${new Date().getFullYear()}">
-                                <div class="input-number__plus">&#10162</div>
-                            </div>`
+    let html = `<div class="activity-field">
+                    <div class="charts-wrapper">
+                        <div class="charts">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="input-number">
+                            <div class="input-number__minus coup">&#10162</div>
+                                <input class="input-number__input" type="number" readonly min="1995" max="${new Date().getFullYear()}" value="${new Date().getFullYear()}">
+                            <div class="input-number__plus">&#10162</div>
+                        </div>
+                    </div>
+                    <div class="reposList">
+                        <ul id="reposChartsLink">      
+                        </ul>
+                    </div>
+                </div>`
     return html
 }
 
@@ -17,11 +25,38 @@ const dataObj = new ChartsData()
 
 function chartSettings() {
     dataObj.sortDataForCharts()
+    showLoadedItems()
     chartInitialization(dataObj.dataInitialization())
     setTittleInfo(dataObj.currentYear, dataObj.reposCount)
+    createReposNamesTable()
     addEventForMinus()
     addEventForPlus()
+}
 
+function showLoadedItems() {
+    checkReposTableForEmpty()
+    document.getElementsByClassName('input-number')[0].style.visibility = 'visible'
+}
+
+function checkReposTableForEmpty() {
+    if (dataObj.reposList.length > 0)
+        document.getElementsByClassName('reposList')[0].getElementsByTagName('ul')[0].style.visibility = 'visible'
+    else document.getElementsByClassName('reposList')[0].getElementsByTagName('ul')[0].style.visibility = 'hidden'
+}
+
+function createReposNamesTable() {
+    let ulElement = document.getElementById('reposChartsLink')
+    while (ulElement.firstChild) {
+        ulElement.removeChild(ulElement.firstChild)
+    }
+    dataObj.reposList.forEach(item => {
+        let newElement = document.createElement('a')
+        newElement.setAttribute('href', `/repos/${store.userObject.getters.getName()}/${item.name}`)
+        newElement.textContent = item.name
+        let liElement = document.createElement('li')
+        liElement.appendChild(newElement)
+        ulElement.appendChild(liElement)
+    })
 }
 
 function addEventForMinus() {
@@ -31,21 +66,23 @@ function addEventForMinus() {
 }
 
 function addEventForPlus() {
-     document.getElementsByClassName('input-number__plus')[0].onclick = () => {
-         plusMinusYear(true)
-     }
+    document.getElementsByClassName('input-number__plus')[0].onclick = () => {
+        plusMinusYear(true)
+    }
 }
 
 function plusMinusYear(isPlus) {
     let elem = document.getElementsByClassName('input-number__input')[0]
-            if (isPlus && elem.value<(new Date().getFullYear()))
-                elem.value++
-            else if(!isPlus && elem.value>1995)
-                elem.value--
-    dataObj.changeYear(Number(elem.value))
-    chart.data.datasets[0].data = dataObj.startData
-    console.log(chart.data.datasets[0].data)
-    chart.update()
+    if (isPlus && elem.value < (new Date().getFullYear()))
+        elem.value++
+    else if (!isPlus && elem.value > 1995)
+        elem.value--
+    dataObj.changeYear(Number(elem.value), () => {
+        chart.data.datasets[0].data = dataObj.startData
+        chart.update()
+        createReposNamesTable()
+        checkReposTableForEmpty()
+    })
 }
 
 function setTittleInfo(currentYear, reposCount) {

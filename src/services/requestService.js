@@ -14,4 +14,7 @@ export default class RequestService {
     static getReposLang(userName,reposName){
         return axios.get(http.getLangRepos(userName,reposName))
     }
+    static getReposByYear(userName,date){
+        return axios.get(http.getReposByYear(userName,date))
+    }
 }

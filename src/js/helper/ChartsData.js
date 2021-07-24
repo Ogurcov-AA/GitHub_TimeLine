@@ -1,4 +1,6 @@
-export default class ChartsData{
+import store from "../store";
+
+export default class ChartsData {
     MONTHS = [
         'January',
         'February',
@@ -32,17 +34,11 @@ export default class ChartsData{
         };
         return data
     }
-    getMinYear = ()=>{
-       let min =  this.reposList.reduce((acc,item)=>{
-           let year = this.parseDate(item.created)[0]
-           return year>acc?acc:year
-        },this.parseDate(this.reposList[0].created)[0])
-    }
 
-     sortDataForCharts = () => {
-        this.reposList = store.repository.getters.getRepos();
+    sortDataForCharts = () => {
+        this.reposList = store.repository.getters.getReposByYearByYear();
         this.reposList.forEach(item => {
-            let dateArr = this.parseDate(item.created)
+            let dateArr = this.parseDate(item.created_at.slice(0,10))
             if (this.checkYear(dateArr)) {
                 this.reposCount++
                 this.startData[Number(dateArr[1]) - 1]++
@@ -56,16 +52,29 @@ export default class ChartsData{
 
     checkYear(date) {
         return Number(this.currentYear) === Number(date[0]);
-
     }
 
-    changeYear = (newYear) =>{
+    changeYear = (newYear,callback) => {
         this.currentYear = newYear;
         this.startData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         this.reposCount = 0
-        this.sortDataForCharts()
-        this.changeYearLabel()
+        this.settings(newYear,callback)
     }
+
+    settings = (year, callback) =>{
+        store.repository.actions.getReposByYear(store.userObject.getters.getName(), year)
+        let timer = setInterval(() => {
+            if (store.repository.getters.checkLoadingReposByYear() !== true) {
+                this.sortDataForCharts()
+                this.changeYearLabel()
+                callback()
+                clearInterval(timer)
+            } else {
+
+            }
+        }, 100)
+    }
+
 
     changeYearLabel() {
         let elem = document.getElementsByClassName('repos-info')

@@ -6,6 +6,8 @@ const repository = {
         repos: '',
         reposInfo: '',
         reposLang: [],
+        reposByYear: [],
+        isLoadingByYear: false,
         errorLoadingRepos: false,
         isLoading: false
     },
@@ -14,18 +16,22 @@ const repository = {
             state.repos = new ReposObject(data).getList()
         },
         setReposInfo(state,data){
-            console.log(data)
             state.reposInfo = data
         },
         setReposLang(state,data){
-            console.log(data)
             state.reposLang = data
+        },
+        setReposByYear(state,data){
+            state.reposByYear = data.items
         },
         errorRepos(state) {
             state.errorLoadingRepos = true
         },
         setLoading(state, boolean) {
             state.isLoading = boolean
+        },
+        setLoadingByYear(state, boolean) {
+            state.isLoadingByYear = boolean
         },
     },
     actions: {
@@ -61,11 +67,24 @@ const repository = {
             } finally {
                 store.repository.mutations.setLoading(store.repository.state, false)
             }
+        },
+        async getReposByYear(userName,date) {
+            try {
+                store.repository.mutations.setLoadingByYear(store.repository.state, true)
+                const response = await requestServices.getReposByYear(userName,date)
+                store.repository.mutations.setReposByYear(store.repository.state,response.data)
+            } catch (e) {
+            } finally {
+                store.repository.mutations.setLoadingByYear(store.repository.state, false)
+            }
         }
     },
     getters: {
         checkLoadingRepos: () => {
             return store.repository.state.errorLoadingRepos
+        },
+        checkLoadingReposByYear: () => {
+            return store.repository.state.isLoadingByYear
         },
         getLoading: () => {
             return store.repository.state.isLoading
@@ -79,6 +98,9 @@ const repository = {
         getReposLang: () => {
             return store.repository.state.reposLang
         },
+        getReposByYearByYear: ()=> {
+            return store.repository.state.reposByYear
+        }
     }
 }
 
