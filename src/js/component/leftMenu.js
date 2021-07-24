@@ -34,7 +34,6 @@ function getUser(userName){
     let timer = new Promise(function (resolve,reject){
        let temp =  setInterval( () =>{
             if (store.userObject.getters.getLoading() !== true && store.userObject.getters.checkError() !== true) {
-               console.log(store.userObject.getters.getName())
                 resolve()
                 clearInterval(temp)
             }

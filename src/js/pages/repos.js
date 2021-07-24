@@ -61,7 +61,6 @@ async function createGrid(size, page = 1) {
     }
     let res = await getReposList(size, page)
     for (let i = 0; i < res.length; i++) {
-        console.log(res[i])
         let newElem = document.createElement(`div`)
         newElem.setAttribute('class', 'cardRectangle')
         newElem.classList.add('cardRectangle')
@@ -69,8 +68,6 @@ async function createGrid(size, page = 1) {
         newElem.insertAdjacentHTML('afterbegin',
             `${reposCard(res[i].name, '', res[i].language, res[i].htmlUrl)}`)
         newElem.onclick = () => {
-            console.log(res[i].name)
-            debugger
             location.pathname = `/repos/${store.userObject.getters.getName()}/${res[i].name}`
         }
         elem.appendChild(newElem)

@@ -99,9 +99,7 @@ function getLang() {
 async function setSecondaryLangHTML(){
     await getLang().then(res => createReposInfoLang(res))
     let elem = document.getElementsByName('reposLanguages')
-    console.log(elem[0])
     for (let item in reposInfo.language) {
-        console.log(item)
         elem[0]?.insertAdjacentHTML('beforebegin',
             `<li><div class="circle other ${item.toLowerCase()}"></div>${item}</li>`)
     }
