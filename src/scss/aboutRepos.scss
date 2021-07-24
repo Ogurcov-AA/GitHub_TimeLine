@@ -87,3 +87,9 @@ $font: Courier New, monospace;
     @include textFont();
   }
 }
+
+@media (min-width: 200px) and (max-width: 1080px) {
+ .about-repos .back-button{
+    margin: -4% 0 0 3%;
+  }
+}

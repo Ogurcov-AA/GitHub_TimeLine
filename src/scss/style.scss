@@ -5,8 +5,7 @@
 @import "aboutRepos";
 @import "activity";
 @import "pagination";
-
-$fontStyle: Roboto, sans-serif;;
+$fontStyle: Roboto, sans-serif;
 $fontColorMain: #2B3648;
 $textColor: #ffff;
 body {
@@ -30,47 +29,6 @@ body {
   -webkit-text-stroke-color: black;
 }
 
-
-.left-side{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 18%;
-  height: 100%;
-  background: #212936;
-
-}
-.user-info{
-  border-bottom: 1px solid #313C4E ;
-  h4{
-    font-family: $fontStyle;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0.15px;
-    color: #AFBDD1;
-    margin-left: 5%;
-    margin-bottom: 2%;
-  }
-}
-.user-image{
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  margin: 10% 0 0 5%;
-}
-.left-menu{
-  ul{
-    padding-left: 0;
-  }
-  li{
-    list-style-type: none;
-  }
-  a{
-   text-decoration: none;
-  }
-}
-
 .main-field{
   width: 82%;
   height: 70%;
@@ -92,4 +50,11 @@ body {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media (min-width: 200px) and (max-width: 1080px) {
+  .main-field {
+    float: none;
+    width: 100%;
+  }
 }
