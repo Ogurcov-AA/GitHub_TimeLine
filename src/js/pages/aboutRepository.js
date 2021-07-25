@@ -2,7 +2,8 @@ import leftMenu from '../component/leftMenu'
 import store from '../store/index'
 
 export default async function getHtml() {
-    await getRepos().then(res => createReposInfo(res))
+    let res = await getRepos()
+    createReposInfo(res)
 
     let html = `${leftMenu()}
                 <div class="main-field">
@@ -56,15 +57,15 @@ let reposInfo = {
 
 function getRepos() {
     store.repository.actions.getRepository(store.userObject.getters.getName(), location.pathname.substring(location.pathname.lastIndexOf('/') + 1))
-    let timer = new Promise(function (resolve, reject) {
-        setInterval(() => {
+    let promise = new Promise(function (resolve, reject) {
+        let timer = setInterval(() => {
             if (store.repository.getters.getLoading() !== true && store.repository.getters.checkLoadingRepos() !== true) {
                 resolve(store.repository.getters.getReposInfo())
-//                document.getElementsByClassName('loader')[0].remove()
+                clearInterval(timer)
             }
         }, 100)
     })
-    return timer
+    return promise
 }
 
 function createReposInfo(res) {
