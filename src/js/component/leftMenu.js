@@ -1,8 +1,7 @@
 import navButton from "./navButton";
 import store from "../store";
 
-export default function leftMenu(userName){
-    getUser(userName)
+export default function leftMenu(){
     let html = `<div class="left-side">
                     <div class="user-info">
                     <img class="user-image" src="${store.userObject.getters.getAvatar()}" alt="">
@@ -27,17 +26,4 @@ export default function leftMenu(userName){
 
 function checkActiveButton(buttonName){
     return location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === buttonName;
-}
-
-function getUser(userName){
-    store.userObject.actions.getUserInfo(userName)
-    let timer = new Promise(function (resolve,reject){
-       let temp =  setInterval( () =>{
-            if (store.userObject.getters.getLoading() !== true && store.userObject.getters.checkError() !== true) {
-                resolve()
-                clearInterval(temp)
-            }
-        }, 100)
-    })
-    return timer
 }

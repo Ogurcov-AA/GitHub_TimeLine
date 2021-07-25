@@ -1,16 +1,16 @@
 import leftMenu from '../component/leftMenu'
 import reposCard from "../component/reposCard";
 import store from "../store";
-import {pagination, createPaginationComp} from "../component/pagination";
+import {createPaginationComp, pagination} from "../component/pagination";
 
 export default async function getHtml() {
-    let html = `${leftMenu(parseURLGetName())}
-                     <div class="main-field">
+
+    let html = `<div class="loader" style="margin: 0 auto"></div> 
+                    <div class="main-field hidden-main-field">
                         <h4 class="textLabel">Public Repositories</h4>
                             <div id="reposCard" class="reposGrid">
-                                <div class="loader"></div>
                             </div>
-                        <div class="navigation">
+                        <nav class="navigation">
                           <div class="navigation-wrapper">
                              <div class="per_page">
                                 <span>per_page</span>
@@ -24,9 +24,8 @@ export default async function getHtml() {
                                 ${pagination()}
                            </div>
                           </div>
-                        </div>
+                        </nav>
                      </div>`;
-
     return html;
 }
 
@@ -36,30 +35,63 @@ let reposList = [];
 
 if (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === 'repos') {
     window.onload = () => {
-        let select = document.getElementsByName('per_page')[0]
-        for(let i=0;i<select.options.length;i++){
-                if(Number(select.options[i].value)===per_page){
-                    select.options[i].selected = true
-                }
-        }
-        select.onchange = () => {
-            per_page = select.options[select.selectedIndex].value
-            setFilter(Number(per_page),1)
-            page=1
-            createGrid(per_page)
-            createPagination(page)
-        }
+        addLeftMenu()
+        addSelectPerPage()
         createGrid(per_page,page)
+        createPagination(page)
+        hiddenLoader()
+        showHiddenElements()
+    }
+}
+
+async function addLeftMenu(){
+    await getUser(parseURLGetName())
+    document.getElementsByClassName("main-field")[0].insertAdjacentHTML('beforebegin', leftMenu())
+}
+function hiddenLoader(){
+    document.getElementsByClassName('loader')[0].style.display = 'none'
+}
+
+function showHiddenElements(){
+    document.getElementsByClassName('hidden-main-field')[0].style.visibility = 'visible'
+}
+
+function getUser(userName){
+    store.userObject.actions.getUserInfo(userName)
+    let timer = new Promise(function (resolve,reject){
+        let temp =  setInterval( () =>{
+           if (store.userObject.getters.getLoading() !== true && store.userObject.getters.checkError() !== true) {
+                resolve(store.userObject.getters.getName())
+                clearInterval(temp)
+            }
+        }, 100)
+    })
+    return timer
+}
+
+
+function addSelectPerPage(){
+    let select = document.getElementsByName('per_page')[0]
+    for(let i=0;i<select.options.length;i++){
+        if(Number(select.options[i].value)===per_page){
+            select.options[i].selected = true
+        }
+    }
+    select.onchange = () => {
+        per_page = select.options[select.selectedIndex].value
+        setFilter(Number(per_page),1)
+        page=1
+        createGrid(per_page)
         createPagination(page)
     }
 }
 
 async function createGrid(size, page = 1) {
+    let res = await getReposList(size, page)
     let elem = document.getElementById('reposCard')
     while (elem?.firstChild) {
         elem.removeChild(elem?.firstChild);
     }
-    let res = await getReposList(size, page)
     for (let i = 0; i < res.length; i++) {
         let newElem = document.createElement(`div`)
         newElem.setAttribute('class', 'cardRectangle')
@@ -87,7 +119,7 @@ function parseURLGetName() {
 async function createPagination(page) {
     let count = store.userObject.getters.getReposCount()
     createPaginationComp(Number(count), per_page, page, function (per_page, page) {
-        createGrid(per_page, page)
+       createGrid(per_page, page)
         setFilter(null,Number(page))
         createPagination(page)
     })
@@ -95,14 +127,13 @@ async function createPagination(page) {
 
 function getRepos(per_page = null, page = null) {
     store.repository.actions.getRepositoryInfo(parseURLGetName(), per_page, page)
-    let timer = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         setInterval(() => {
             if (store.repository.getters.getLoading() !== true && store.repository.getters.checkLoadingRepos() !== true) {
                 resolve(store.repository.getters.getRepos())
             }
         }, 100)
     })
-    return timer
 }
 
 function setFilter(per_page=null,page=null){
