@@ -1,6 +1,6 @@
 function pagination() {
     let html = `<div class="pagination-field">
-                <form name="paginRadio">     
+                <form name="paginationRadio">     
                 </form>
                 </div>`;
     return html;
@@ -11,7 +11,7 @@ function calculatePage(allcount, per_page) {
 }
 
 function reRenderPagination() {
-    let elem = document.getElementsByName('paginRadio')[0]
+    let elem = document.getElementsByName('paginationRadio')[0]
     while (elem.firstChild) {
         elem.removeChild(elem.firstChild);
     }
@@ -49,16 +49,16 @@ function createElement(per_page, index, pageActive, callback) {
         newInput.checked = true
     }
     newInput.setAttribute('type', 'radio')
-    newInput.setAttribute('id', `paginRadio${index}`)
+    newInput.setAttribute('id', `paginationRadio${index}`)
     newInput.setAttribute('name', 'pagination')
 
-    newLabel.setAttribute('for', `paginRadio${index}`)
+    newLabel.setAttribute('for', `paginationRadio${index}`)
     newLabel.textContent = index
     newLabel.onclick = () => {
         callback(per_page, Number(newLabel.textContent))
     }
-    document.getElementsByName('paginRadio')[0].appendChild(newInput)
-    document.getElementsByName('paginRadio')[0].appendChild(newLabel)
+    document.getElementsByName('paginationRadio')[0].appendChild(newInput)
+    document.getElementsByName('paginationRadio')[0].appendChild(newLabel)
 }
 
 export {pagination, createPaginationComp}
