@@ -17,6 +17,10 @@ $vue: #015a01;
 $java: yellow;
 $other: red;
 
+.hidden-main-field{
+  visibility: hidden;
+}
+
 .cardRectangle {
   border: 2px solid #5b5b5b;
   border-radius: 10px;
