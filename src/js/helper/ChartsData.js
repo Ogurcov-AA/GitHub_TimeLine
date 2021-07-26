@@ -17,9 +17,9 @@ export default class ChartsData {
     ];
 
     reposCount = 0;
-    currentYear = 2021;
+    currentYear = new Date().getFullYear();
     startData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    reposList
+    reposList = []
 
     dataInitialization = () => {
         const data = {
@@ -69,8 +69,6 @@ export default class ChartsData {
                 this.changeYearLabel()
                 callback()
                 clearInterval(timer)
-            } else {
-
             }
         }, 100)
     }

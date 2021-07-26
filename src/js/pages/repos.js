@@ -70,7 +70,7 @@ function addSelectPerPage(){
 }
 
 async function createGrid(size, page = 1) {
-    let res = await getReposList(size, page)
+    let res = await getRepos(size, page)
     let elem = document.getElementById('reposCard')
     while (elem?.firstChild) {
         elem.removeChild(elem?.firstChild);
@@ -87,12 +87,6 @@ async function createGrid(size, page = 1) {
         }
         elem.appendChild(newElem)
     }
-}
-
-async function getReposList(per_page, page) {
-    let res = await getRepos(per_page, page)
-    reposList = res
-    return res
 }
 
 async function createPagination(page) {

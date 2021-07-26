@@ -35,18 +35,13 @@ export default async function getHtml() {
                     </div>    
                </div>`;
        addLeftMenu()
+       setSecondaryLangHTML()
     }
    catch (e){
        html = `<div class="error-loading"><h1>Erorr UserName or RepositoryName</h1>
                </div>`
    }
     return html;
-}
-if(location.pathname === location.pathname.match('\/repos/[a-zA-z0-9-_.*+?^${}()|[\\]\\\\]+/[a-zA-z0-9-_.*+?^${}()|[\\]\\\\]+')?.[0])
-{
-    window.onload = () => {
-        setSecondaryLangHTML()
-    }
 }
 
 let reposInfo = {
@@ -84,7 +79,6 @@ function getRepos() {
 }
 
 function createReposInfo(res) {
-    console.log(res)
     reposInfo.ownerLogin = res.owner.login
     reposInfo.name = res.name
     reposInfo.description = res.description

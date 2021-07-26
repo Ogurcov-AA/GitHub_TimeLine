@@ -10,7 +10,7 @@ function calculatePage(allcount, per_page) {
     return Math.ceil(allcount / per_page);
 }
 
-function reRenderPagination() {
+function clearPaginationStreaks() {
     let elem = document.getElementsByName('paginationRadio')[0]
     while (elem.firstChild) {
         elem.removeChild(elem.firstChild);
@@ -18,7 +18,7 @@ function reRenderPagination() {
 }
 
 function createPaginationComp(allCount, per_page, pageActive, callback) {
-    reRenderPagination()
+    clearPaginationStreaks()
     let count = calculatePage(allCount, per_page)
     if (count <= 5) {
         startEndPagination(1, count, pageActive, per_page, callback)

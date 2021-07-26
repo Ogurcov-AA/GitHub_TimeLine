@@ -10,6 +10,8 @@ export default async function getHtml() {
     return html;
 }
 
+let cyrrentYear = new Date().getFullYear()
+
 if (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === 'activity') {
     window.onload = () => {
         settings()
@@ -18,7 +20,7 @@ if (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === 'act
 }
 
 function settings(){
-    store.repository.actions.getReposByYear(parseURLGetName(), 2021)
+    store.repository.actions.getReposByYear(parseURLGetName(), cyrrentYear)
     let timer = setInterval(() => {
         if (store.repository.getters.checkLoadingReposByYear() !== true) {
             chartSettings();
@@ -27,5 +29,3 @@ function settings(){
         }
     }, 100)
 }
-
-
