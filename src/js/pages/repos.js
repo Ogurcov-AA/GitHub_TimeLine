@@ -1,7 +1,7 @@
-import leftMenu from '../component/leftMenu'
 import reposCard from "../component/reposCard";
 import store from "../store";
 import {createPaginationComp, pagination} from "../component/pagination";
+import {addLeftMenu, parseURLGetName} from '../helper/commonAsyncRequests'
 
 export default async function getHtml() {
 
@@ -44,29 +44,12 @@ if (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === 'rep
     }
 }
 
-async function addLeftMenu(){
-    await getUser(parseURLGetName())
-    document.getElementsByClassName("main-field")[0].insertAdjacentHTML('beforebegin', leftMenu())
-}
 function hiddenLoader(){
     document.getElementsByClassName('loader')[0].style.display = 'none'
 }
 
 function showHiddenElements(){
     document.getElementsByClassName('hidden-main-field')[0].style.visibility = 'visible'
-}
-
-function getUser(userName){
-    store.userObject.actions.getUserInfo(userName)
-    let timer = new Promise(function (resolve,reject){
-        let temp =  setInterval( () =>{
-           if (store.userObject.getters.getLoading() !== true && store.userObject.getters.checkError() !== true) {
-                resolve(store.userObject.getters.getName())
-                clearInterval(temp)
-            }
-        }, 100)
-    })
-    return timer
 }
 
 
@@ -110,10 +93,6 @@ async function getReposList(per_page, page) {
     let res = await getRepos(per_page, page)
     reposList = res
     return res
-}
-
-function parseURLGetName() {
-    return location.pathname.substring(location.pathname.indexOf('/', 1) + 1, location.pathname.lastIndexOf('/'))
 }
 
 async function createPagination(page) {

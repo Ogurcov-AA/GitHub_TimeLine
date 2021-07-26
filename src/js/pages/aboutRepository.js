@@ -1,12 +1,12 @@
-import leftMenu from '../component/leftMenu'
 import store from '../store/index'
+import {addLeftMenu,parseURLGetName} from '../helper/commonAsyncRequests'
 
 export default async function getHtml() {
-    let res = await getRepos()
-    createReposInfo(res)
-
-    let html = `${leftMenu()}
-                <div class="main-field">
+    let html
+   try {
+       let res = await getRepos()
+       createReposInfo(res)
+    html = `<div class="main-field">
                     <div class="about-repos">
                     <h1 class="back-button">⮰</h1>
                        <div  class="repos-info">
@@ -34,8 +34,19 @@ export default async function getHtml() {
                        </div>
                     </div>    
                </div>`;
-    setSecondaryLangHTML()
+       addLeftMenu()
+    }
+   catch (e){
+       html = `<div class="error-loading"><h1>Erorr UserName or RepositoryName</h1>
+               </div>`
+   }
     return html;
+}
+if(location.pathname === location.pathname.match('\/repos/[a-zA-z0-9-_.*+?^${}()|[\\]\\\\]+/[a-zA-z0-9-_.*+?^${}()|[\\]\\\\]+')?.[0])
+{
+    window.onload = () => {
+        setSecondaryLangHTML()
+    }
 }
 
 let reposInfo = {
@@ -56,11 +67,15 @@ let reposInfo = {
 }
 
 function getRepos() {
-    store.repository.actions.getRepository(store.userObject.getters.getName(), location.pathname.substring(location.pathname.lastIndexOf('/') + 1))
+    store.repository.actions.getRepository(parseURLGetName(), location.pathname.substring(location.pathname.lastIndexOf('/') + 1))
     let promise = new Promise(function (resolve, reject) {
         let timer = setInterval(() => {
             if (store.repository.getters.getLoading() !== true && store.repository.getters.checkLoadingRepos() !== true) {
                 resolve(store.repository.getters.getReposInfo())
+                clearInterval(timer)
+            }
+            else if(store.repository.getters.checkLoadingRepos()){
+                reject("error userName or Repository")
                 clearInterval(timer)
             }
         }, 100)
@@ -69,6 +84,7 @@ function getRepos() {
 }
 
 function createReposInfo(res) {
+    console.log(res)
     reposInfo.ownerLogin = res.owner.login
     reposInfo.name = res.name
     reposInfo.description = res.description
@@ -86,7 +102,7 @@ function createReposInfoLang(res) {
 }
 
 function getLang() {
-    store.repository.actions.getReposLang(store.userObject.getters.getName(), location.pathname.substring(location.pathname.lastIndexOf('/') + 1))
+    store.repository.actions.getReposLang(parseURLGetName(), location.pathname.substring(location.pathname.lastIndexOf('/') + 1))
     let timer = new Promise(function (resolve, reject) {
         setInterval(() => {
             if (store.repository.getters.getLoading() !== true && store.repository.getters.checkLoadingRepos() !== true) {

@@ -1,31 +1,31 @@
-import leftMenu from '../component/leftMenu'
 import {charts, chartSettings} from "../component/charts";
 import store from '../store/index'
+import {addLeftMenu, parseURLGetName} from '../helper/commonAsyncRequests'
 
 export default async function getHtml() {
-    let html = `${leftMenu(parseURLGetName())}
-                    <div class="main-field">
+    let html = `<div class="main-field">
                      <div class="loader" style="margin: auto"></div>
                            ${charts()} 
-                    </div>`;
-    settings()
+                </div>`;
     return html;
 }
 
+if (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === 'activity') {
+    window.onload = () => {
+        settings()
+        addLeftMenu()
+    }
+}
+
 function settings(){
-    store.repository.actions.getReposByYear(store.userObject.getters.getName(), 2021)
+    store.repository.actions.getReposByYear(parseURLGetName(), 2021)
     let timer = setInterval(() => {
         if (store.repository.getters.checkLoadingReposByYear() !== true) {
             chartSettings();
             document.getElementsByClassName('loader')[0].remove()
             clearInterval(timer)
-        } else {
-
         }
     }, 100)
 }
 
-function parseURLGetName(){
-    return location.pathname.substring(location.pathname.indexOf('/',1)+1,location.pathname.lastIndexOf('/'))
-}
 
