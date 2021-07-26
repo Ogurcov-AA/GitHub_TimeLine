@@ -88,6 +88,13 @@ $font: Courier New, monospace;
   }
 }
 
+.error-loading{
+  text-align: center;
+  margin-top: 10%;
+  color: $aboutColor;
+}
+
+
 @media (min-width: 200px) and (max-width: 1080px) {
  .about-repos .back-button{
     margin: -4% 0 0 3%;
