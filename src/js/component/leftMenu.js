@@ -1,18 +1,17 @@
 import navButton from "./navButton";
-import store from "../store";
 
-export default function leftMenu(){
+export default function leftMenu(userName, avatarUrl){
     let html = `<div class="left-side">
                     <div class="user-info">
-                    <img class="user-image" src="${store.userObject.getters.getAvatar()}" alt="">
-                    <h4>${store.userObject.getters.getName()}</h4>
+                    <img class="user-image" src="${avatarUrl}" alt="">
+                    <h4>${userName}</h4>
                     </div>
                         <nav class="left-menu">
                             <ul>
-                            <li><a href="/users/${store.userObject.getters.getName()}/repos">
+                            <li><a href="/users/${userName}/repos">
                             ${navButton("/img/repository.svg", "Repository", checkActiveButton('repos'))}
                             </a></li>
-                            <li><a href="/users/${store.userObject.getters.getName()}/activity">
+                            <li><a href="/users/${userName}/activity">
                             ${navButton("/img/activity.svg", "Activity",checkActiveButton('activity'))}
                             </a></li>
                              <li><a href="/">
