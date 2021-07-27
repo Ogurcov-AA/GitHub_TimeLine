@@ -88,7 +88,6 @@ function addEventForPlus() {
 }
 
 function chartsUpdate(elem){
-    console.log("+")
     chart.data.datasets[0].data = dataObj.startData
     chart.update()
     elem.value = dataObj.currentYear
