@@ -8,6 +8,7 @@ const repository = {
         reposLang: [],
         reposByYear: [],
         isLoadingByYear: false,
+        errorLoadingByYear: false,
         errorLoadingRepos: false,
         isLoading: false
     },
@@ -24,8 +25,11 @@ const repository = {
         setReposByYear(state,data){
             state.reposByYear = data.items
         },
-        errorRepos(state) {
-            state.errorLoadingRepos = true
+        errorRepos(state,boolean) {
+            state.errorLoadingRepos = boolean
+        },
+        errorReposByYear(state, boolean) {
+            state.errorLoadingByYear = boolean
         },
         setLoading(state, boolean) {
             state.isLoading = boolean
@@ -37,43 +41,51 @@ const repository = {
     actions: {
         async getRepositoryInfo(userName,per_page=null, page=null) {
             try {
+                store.repository.mutations.errorRepos(store.repository.state, false)
                 store.repository.mutations.setLoading(store.repository.state, true)
                 const response = await requestServices.getRepos(userName,per_page,page)
                 store.repository.mutations.setRepos(store.repository.state,response.data)
             } catch (e) {
-                store.repository.mutations.errorRepos(store.repository.state)
+                console.log("erros",e)
+                store.repository.mutations.errorRepos(store.repository.state, true)
             } finally {
                 store.repository.mutations.setLoading(store.repository.state, false)
             }
         },
         async getRepository(userName,reposName) {
             try {
+
+                store.repository.mutations.errorRepos(store.repository.state,false)
                 store.repository.mutations.setLoading(store.repository.state, true)
                 const response = await requestServices.getReposInfo(userName,reposName)
                 store.repository.mutations.setReposInfo(store.repository.state,response.data)
             } catch (e) {
-                store.repository.mutations.errorRepos(store.repository.state)
+                store.repository.mutations.errorRepos(store.repository.state,true)
             } finally {
                 store.repository.mutations.setLoading(store.repository.state, false)
             }
         },
         async getReposLang(userName,reposName) {
             try {
+
+                store.repository.mutations.errorRepos(store.repository.state,false)
                 store.repository.mutations.setLoading(store.repository.state, true)
                 const response = await requestServices.getReposLang(userName,reposName)
                 store.repository.mutations.setReposLang(store.repository.state,response.data)
             } catch (e) {
-                store.repository.mutations.errorRepos(store.repository.state)
+                store.repository.mutations.errorRepos(store.repository.state,true)
             } finally {
                 store.repository.mutations.setLoading(store.repository.state, false)
             }
         },
         async getReposByYear(userName,date) {
             try {
+                store.repository.mutations.errorReposByYear(store.repository.state,false)
                 store.repository.mutations.setLoadingByYear(store.repository.state, true)
                 const response = await requestServices.getReposByYear(userName,date)
                 store.repository.mutations.setReposByYear(store.repository.state,response.data)
             } catch (e) {
+                store.repository.mutations.errorReposByYear(store.repository.state,true)
             } finally {
                 store.repository.mutations.setLoadingByYear(store.repository.state, false)
             }
@@ -85,6 +97,9 @@ const repository = {
         },
         checkLoadingReposByYear: () => {
             return store.repository.state.isLoadingByYear
+        },
+        checkErrorReposByYear: () => {
+            return store.repository.state.errorLoadingByYear
         },
         getLoading: () => {
             return store.repository.state.isLoading
