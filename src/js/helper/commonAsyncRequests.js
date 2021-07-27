@@ -23,4 +23,18 @@ function parseURLGetName(){
     return location.pathname.substring(location.pathname.indexOf('/',1)+1,location.pathname.lastIndexOf('/'))
 }
 
-export {addLeftMenu, parseURLGetName}
+function getReposByYear(currentYear) {
+    store.repository.actions.getReposByYear(parseURLGetName(), currentYear)
+    return new Promise((resolve, reject) => {
+        let timer = setInterval(() => {
+            if (store.repository.getters.checkLoadingReposByYear() !== true && store.repository.getters.checkErrorReposByYear()!==true) {
+                resolve()
+                clearInterval(timer)
+            }else if(store.repository.getters.checkErrorReposByYear()===true){
+                reject()
+            }
+        }, 100)
+    })
+}
+
+export {addLeftMenu, parseURLGetName, getReposByYear}

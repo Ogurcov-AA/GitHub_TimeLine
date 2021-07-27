@@ -1,4 +1,5 @@
 import store from "../store";
+import {getReposByYear} from './commonAsyncRequests'
 
 export default class ChartsData {
     MONTHS = [
@@ -54,41 +55,25 @@ export default class ChartsData {
         return Number(this.currentYear) === Number(date[0]);
     }
 
-    changeYear = (newYear,callback) => {
-        this.currentYear = newYear;
+    changeYear = async (newYear, callback) => {
         this.startData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         this.reposCount = 0
-        this.settings(newYear,callback)
+        if(await this.settings(newYear)) {
+            this.currentYear = newYear;
+            this.sortDataForCharts()
+            callback()
+        }
     }
 
-    settings = (year, callback) =>{
-        store.repository.actions.getReposByYear(store.userObject.getters.getName(), year)
-        let timer = setInterval(() => {
-            if (store.repository.getters.checkLoadingReposByYear() !== true) {
-                this.sortDataForCharts()
-                this.changeYearLabel()
-                callback()
-                clearInterval(timer)
-            }
-        }, 100)
+    settings = async (year) =>{
+        try {
+            await getReposByYear(year)
+            return true
+        }catch (e) {
+            alert("Error connection")
+            return false
+        }
     }
 
-
-    changeYearLabel() {
-        let elem = document.getElementsByClassName('repos-info')
-        elem[0].childNodes.forEach((item, index) => {
-            if (item.nodeName === "H2") {
-                let tempTextContent = item.textContent
-                tempTextContent = tempTextContent.replace(/\d{4}/, this.currentYear)
-                tempTextContent = tempTextContent.replaceAt(tempTextContent.match(/\(\d+/).index + 1,
-                    tempTextContent.match(/\(\d+/)[0].length - 1, this.reposCount)
-                item.textContent = tempTextContent
-            }
-        })
-    }
 }
 
-String.prototype.replaceAt = function (index, length, replacement) {
-    replacement = replacement.toString()
-    return this.substr(0, index) + replacement + this.substr(index + length - 1 + replacement.length);
-}
