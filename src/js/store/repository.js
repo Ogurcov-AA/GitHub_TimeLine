@@ -46,7 +46,6 @@ const repository = {
                 const response = await requestServices.getRepos(userName,per_page,page)
                 store.repository.mutations.setRepos(store.repository.state,response.data)
             } catch (e) {
-                console.log("erros",e)
                 store.repository.mutations.errorRepos(store.repository.state, true)
             } finally {
                 store.repository.mutations.setLoading(store.repository.state, false)

@@ -29,18 +29,37 @@ export default async function getHtml() {
     return html;
 }
 
-let per_page = Number(localStorage.getItem('per_page')) || 6;
-let page = Number(localStorage.getItem('currentPage')) || 1;
-let reposList = [];
+let per_page;
+let page;
+
+function getFilter() {
+    let per_pageOBJ = JSON.parse(localStorage.getItem('per_pageFilter'))
+    if (per_pageOBJ !== null && per_pageOBJ.userName === store.userObject.getters.getName()) {
+        per_page = Number(per_pageOBJ.per_page);
+        page = Number(per_pageOBJ.page);
+    } else {
+        per_page = 6;
+        page = 1
+    }
+}
 
 if (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === 'repos') {
     window.onload = async () => {
         await addLeftMenu()
+        getFilter()
         addSelectPerPage()
         createGrid(per_page,page)
         createPagination(page)
         hiddenLoader()
         showHiddenElements()
+    }
+    window.onunload = () => {
+        localStorage.removeItem('per_pageFilter')
+        localStorage.setItem('per_pageFilter', JSON.stringify({
+            userName: store.userObject.getters.getName(),
+            per_page,
+            page
+        }))
     }
 }
 
@@ -62,7 +81,6 @@ function addSelectPerPage() {
     }
     select.onchange = () => {
         per_page = select.options[select.selectedIndex].value
-        setFilter(Number(per_page), 1)
         page = 1
         createGrid(per_page)
         createPagination(page)
@@ -110,10 +128,10 @@ function createPagination(page) {
     })
 }
 
-async function callbackForPagination(per_page, page) {
-    if (await createGrid(per_page, page)) {
-        setFilter(null, Number(page))
-        createPagination(page)
+async function callbackForPagination(per_page, newPage) {
+    if (await createGrid(per_page, newPage)) {
+        page = newPage
+        createPagination(newPage)
     }
 }
 
@@ -130,21 +148,4 @@ function getRepos(per_page = null, page = null) {
             }
         }, 100)
     })
-}
-
-function setFilter(per_page = null, page = null) {
-    if (page) {
-        localStorage.removeItem('currentPage')
-        localStorage.setItem('currentPage', JSON.stringify({
-            userName: store.userObject.getters.getName(),
-            page: Number(page)
-        }))
-    }
-    if (per_page) {
-        localStorage.removeItem('per_page')
-        localStorage.setItem('per_page', JSON.stringify({
-            userName: store.userObject.getters.getName(),
-            per_page: Number(per_page)
-        }))
-    }
 }
